@@ -8,6 +8,7 @@ package com.nets.patientvisit.serviceimpl;
 import com.nets.patientvisit.dao.PatientDao;
 import com.nets.patientvisit.entity.Patient;
 import com.nets.patientvisit.exception.DuplicateException;
+import com.nets.patientvisit.exception.MissingException;
 import com.nets.patientvisit.service.HolidayService;
 import com.nets.patientvisit.service.PatientService;
 import java.util.List;
@@ -50,10 +51,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public Patient update(Patient req) {
-        
+
         // Check for public holiday 
         holidaySvc.checkForHoliday();
-        
+
         return patientDao.saveOrUpdate(req);
 
     }
@@ -61,11 +62,17 @@ public class PatientServiceImpl implements PatientService {
     @Override
     @Transactional
     public void delete(String id) {
-        
+
         // Check for public holiday 
         holidaySvc.checkForHoliday();
-        
-        patientDao.deleteById(id);
+
+        Patient patient = patientDao.findById(id);
+
+        if (patient == null) {
+            throw new MissingException();
+        } else {
+            patientDao.deleteById(id);
+        }   
     }
 
     private void checkForDuplicate(Patient req) {

@@ -11,6 +11,7 @@ import com.nets.patientvisit.exception.DuplicateException;
 import com.nets.patientvisit.service.HolidayService;
 import com.nets.patientvisit.service.VisitService;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
+    @Transactional
     public Visit save(Visit req) {
         
         
@@ -42,11 +44,13 @@ public class VisitServiceImpl implements VisitService {
         // Check for duplicate ID
         this.checkForDuplicate(req);
         
-        return visitDao.saveOrUpdate(req);
-       
+        Visit visit = visitDao.saveOrUpdate(req);
+        
+        return visitDao.findById(visit.getId());
     }
 
     @Override
+    @Transactional
     public Visit update(Visit req) {
         
         // Check for holiday 
@@ -57,6 +61,7 @@ public class VisitServiceImpl implements VisitService {
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
         
         // Check for holiday 

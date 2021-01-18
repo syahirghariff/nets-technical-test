@@ -5,6 +5,7 @@
  */
 package com.nets.patientvisit.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nets.patientvisit.enums.Constants;
 import com.nets.patientvisit.enums.GenderEnum;
 import java.io.Serializable;
@@ -44,13 +45,13 @@ public class Patient implements Serializable{
     private GenderEnum gender; 
     
     @Column(name = "CREATED_DATE")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date createdDate; 
     
     @Column(name = "MODIFIED_DATE")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date modifiedDate; 
     
     @Column(name = "CREATED_BY")
@@ -65,7 +66,8 @@ public class Patient implements Serializable{
        this.name = req.getName().trim();
        this.age = req.getAge(); 
        this.gender = req.getGender(); 
-       this.createdDate = new Date();
+       this.createdDate = req.getCreatedDate() != null ? req.getCreatedDate() : new Date();
+       this.modifiedDate = new Date();
        this.createdBy = Constants.USERNAME;
     }
 

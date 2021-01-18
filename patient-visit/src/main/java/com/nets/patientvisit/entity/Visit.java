@@ -5,15 +5,19 @@
  */
 package com.nets.patientvisit.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nets.patientvisit.enums.Constants;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -29,8 +33,8 @@ public class Visit implements Serializable{
     private String id; 
     
     @Column(name = "VISIT_DATE")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date visitDate;
     
     @Column(name = "PHYSICIAN_ID")
@@ -54,6 +58,10 @@ public class Visit implements Serializable{
     
     @Column(name = "MODIFIED_BY")
     private String modifiedBy; 
+    
+    @ManyToOne
+    @JoinColumn(name="PHYSICIAN_ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    private Physician physician;
 
     public Visit() {
     }
@@ -132,6 +140,14 @@ public class Visit implements Serializable{
 
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    public Physician getPhysician() {
+        return physician;
+    }
+
+    public void setPhysician(Physician physician) {
+        this.physician = physician;
     }
 
     @Override
