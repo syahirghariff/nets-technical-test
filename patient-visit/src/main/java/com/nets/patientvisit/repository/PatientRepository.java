@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.nets.patientvisit.service;
+package com.nets.patientvisit.repository;
+
+import com.nets.patientvisit.entity.Patient;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author syahirghariff
  */
-public interface HolidayService{
-    
-    public void checkForHoliday ();
+public interface PatientRepository extends JpaRepository<Patient, String>  {
     
 }

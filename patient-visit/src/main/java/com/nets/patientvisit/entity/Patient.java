@@ -18,7 +18,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  *
@@ -26,116 +28,53 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "PATIENT")
-public class Patient implements Serializable{
-    
+@Getter
+@Setter
+@NoArgsConstructor
+public class Patient implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Column(name = "ID")
-    private String id; 
-    
+    private String id;
+
     @Column(name = "NAME")
     private String name;
-    
+
     @Column(name = "AGE")
-    private Integer age; 
-    
+    private Integer age;
+
     @Column(name = "GENDER")
     @Enumerated(EnumType.STRING)
-    private GenderEnum gender; 
-    
+    private GenderEnum gender;
+
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date createdDate; 
-    
+    private Date createdDate;
+
     @Column(name = "MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date modifiedDate; 
-    
+    private Date modifiedDate;
+
     @Column(name = "CREATED_BY")
-    private String createdBy; 
+    private String createdBy;
 
-    public Patient() {
-    }
-    
-    public Patient(Patient req){
-        
-       this.id = req.getId().trim(); 
-       this.name = req.getName().trim();
-       this.age = req.getAge(); 
-       this.gender = req.getGender(); 
-       this.createdDate = req.getCreatedDate() != null ? req.getCreatedDate() : new Date();
-       this.modifiedDate = new Date();
-       this.createdBy = Constants.USERNAME;
-    }
+    public Patient(Patient req) {
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public GenderEnum getGender() {
-        return gender;
-    }
-
-    public void setGender(GenderEnum gender) {
-        this.gender = gender;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+        this.id = req.getId().trim();
+        this.name = req.getName().trim();
+        this.age = req.getAge();
+        this.gender = req.getGender();
+        this.createdDate = req.getCreatedDate() != null ? req.getCreatedDate() : new Date();
+        this.modifiedDate = new Date();
+        this.createdBy = Constants.USERNAME;
     }
 
     @Override
     public String toString() {
         return "Patient{" + "id=" + id + ", name=" + name + ", age=" + age + ", gender=" + gender + ", createdDate=" + createdDate + ", modifiedDate=" + modifiedDate + ", createdBy=" + createdBy + '}';
     }
-    
-    
-    
-    
-    
-    
-    
 }

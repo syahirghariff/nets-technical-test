@@ -14,6 +14,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -22,6 +25,7 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "PHYSICIAN")
+@Getter @Setter @NoArgsConstructor
 public class Physician implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -48,9 +52,6 @@ public class Physician implements Serializable {
     
     @Column(name = "MODIFIED_BY")
     private String modifiedBy; 
-
-    public Physician() {
-    }
     
     public Physician(Physician req) {
     
@@ -60,54 +61,6 @@ public class Physician implements Serializable {
         this.modifiedDate = new Date();
         this.modifiedBy = Constants.USERNAME;
         this.createdBy = Constants.USERNAME; 
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getModifiedBy() {
-        return modifiedBy;
-    }
-
-    public void setModifiedBy(String modifiedBy) {
-        this.modifiedBy = modifiedBy;
     }
 
     @Override

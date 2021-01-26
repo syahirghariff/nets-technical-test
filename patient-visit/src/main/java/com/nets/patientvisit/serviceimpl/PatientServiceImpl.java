@@ -5,15 +5,16 @@
  */
 package com.nets.patientvisit.serviceimpl;
 
-import com.nets.patientvisit.dao.PatientDao;
 import com.nets.patientvisit.entity.Patient;
-import com.nets.patientvisit.exception.DuplicateException;
-import com.nets.patientvisit.exception.MissingException;
+import com.nets.patientvisit.exception.ApplicationException;
+import com.nets.patientvisit.repository.PatientRepository;
 import com.nets.patientvisit.service.HolidayService;
 import com.nets.patientvisit.service.PatientService;
 import java.util.List;
+import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,64 +25,42 @@ import org.springframework.stereotype.Service;
 public class PatientServiceImpl implements PatientService {
 
     @Autowired
-    private PatientDao patientDao;
-
-    @Autowired
-    private HolidayService holidaySvc;
+    private PatientRepository patientRepo;
 
     @Override
     public List<Patient> findAll() {
-        return patientDao.findAll();
+        return patientRepo.findAll();
     }
 
     @Override
     @Transactional
     public Patient save(Patient req) {
 
-        // Check for public holiday 
-        holidaySvc.checkForHoliday();
-
         // Check for duplication ID
-        this.checkForDuplicate(req);
+        patientRepo.findById(req.getId()).ifPresent(patient -> {
+            throw new ApplicationException("Patient ID already exist: ".concat(patient.getId()), HttpStatus.CONFLICT);
+        });
 
-        return patientDao.saveOrUpdate(req);
+        return patientRepo.save(new Patient(req));
 
     }
 
     @Override
     @Transactional
     public Patient update(Patient req) {
-
-        // Check for public holiday 
-        holidaySvc.checkForHoliday();
-
-        return patientDao.saveOrUpdate(req);
-
+        return patientRepo.save(new Patient(req));
     }
 
     @Override
     @Transactional
     public void delete(String id) {
+        Optional<Patient> patientOpt = patientRepo.findById(id);
 
-        // Check for public holiday 
-        holidaySvc.checkForHoliday();
-
-        Patient patient = patientDao.findById(id);
-
-        if (patient == null) {
-            throw new MissingException();
-        } else {
-            patientDao.deleteById(id);
-        }   
-    }
-
-    private void checkForDuplicate(Patient req) {
-
-        // Check if there's duplication in ID
-        Patient patient = patientDao.findById(req.getId());
-        if (patient != null) {
-            throw new DuplicateException(patient.getId());
-        }
+        patientOpt.ifPresentOrElse(patient -> {
+            patientRepo.delete(patient);
+        }, () -> {
+            throw new ApplicationException("Patient ID cannot be found ", HttpStatus.NOT_FOUND);
+        });
     }
 
 }

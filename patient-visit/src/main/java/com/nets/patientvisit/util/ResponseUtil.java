@@ -5,6 +5,7 @@
  */
 package com.nets.patientvisit.util;
 
+import com.nets.patientvisit.exception.ApplicationException;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -30,9 +31,10 @@ public class ResponseUtil {
     }
     
     public static ResponseEntity exception(Throwable err) {
-        
         Map res = new HashMap<>();
-        res.put("status", "ERROR");
+        
+        ApplicationException appException = (ApplicationException) err;
+        res.put("status", appException.getHttpStatus());
         res.put("content", err.getMessage()); 
     
         return ResponseEntity.ok(res);

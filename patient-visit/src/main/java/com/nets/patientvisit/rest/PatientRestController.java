@@ -27,7 +27,7 @@ public class PatientRestController {
     @Autowired
     private PatientService patientSvc;
 
-    @GetMapping("/find_all")
+    @GetMapping("/find-all")
     public ResponseEntity findAll() {
 
         try {
@@ -47,7 +47,7 @@ public class PatientRestController {
         }
 
     }
-    
+
     @PostMapping("update")
     public ResponseEntity update(@RequestBody Patient req) {
         try {
@@ -56,9 +56,9 @@ public class PatientRestController {
             return ResponseUtil.exception(error);
         }
     }
-    
+
     @PostMapping("delete")
-    public ResponseEntity save(@RequestBody String id) {
+    public ResponseEntity delete(@RequestBody String id) {
 
         try {
             patientSvc.delete(id);

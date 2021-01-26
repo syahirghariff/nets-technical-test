@@ -13,6 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
@@ -21,6 +24,9 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "BILLING")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Billing implements Serializable {
 
     @Id
@@ -37,43 +43,6 @@ public class Billing implements Serializable {
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private Date billedDate;
-
-    public Billing() {
-    }
-    
-    
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
-    }
-
-    public String getPhysicianId() {
-        return physicianId;
-    }
-
-    public void setPhysicianId(String physicianId) {
-        this.physicianId = physicianId;
-    }
-
-    public Date getBilledDate() {
-        return billedDate;
-    }
-
-    public void setBilledDate(Date billedDate) {
-        this.billedDate = billedDate;
-    }
 
     @Override
     public String toString() {
