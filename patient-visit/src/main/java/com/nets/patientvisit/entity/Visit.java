@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -39,7 +38,7 @@ public class Visit implements Serializable {
 
     @Column(name = "VISIT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date visitDate;
 
     @Column(name = "PHYSICIAN_ID")
@@ -50,12 +49,12 @@ public class Visit implements Serializable {
 
     @Column(name = "CREATED_DATE")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date createdDate;
 
     @Column(name = "MODIFIED_DATE")
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date modifiedDate;
 
     @Column(name = "CREATED_BY")

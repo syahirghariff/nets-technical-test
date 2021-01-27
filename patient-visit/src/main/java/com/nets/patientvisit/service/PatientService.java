@@ -20,6 +20,8 @@ public interface PatientService {
     
     public Patient update(Patient req); 
     
+    public Patient findById (String id);
+    
     public void delete(String id);
     
 }

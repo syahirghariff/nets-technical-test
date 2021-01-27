@@ -29,11 +29,21 @@ public class PhysicianRestController {
     private PhysicianService physicianSvc;
     
     
-    @GetMapping("/find_all")
+    @GetMapping("/find-all")
     public ResponseEntity findAll() {
 
         try {
             return ResponseUtil.success(physicianSvc.findAll());
+        } catch (Exception error) {
+            return ResponseUtil.exception(error);
+        }
+    }
+    
+    @GetMapping("/find-physician-list")
+    public ResponseEntity findPhysicianList() {
+
+        try {
+            return ResponseUtil.success(physicianSvc.findPhysician());
         } catch (Exception error) {
             return ResponseUtil.exception(error);
         }
@@ -51,6 +61,15 @@ public class PhysicianRestController {
 
     }
     
+    @PostMapping("find-by-id")
+    public ResponseEntity findById(@RequestBody String id) {
+        try {
+            return ResponseUtil.success(physicianSvc.findById(id));
+        } catch (Exception error) {
+            return ResponseUtil.exception(error);
+        }
+    }
+    
     @PostMapping("update")
     public ResponseEntity update(@RequestBody Physician req) {
         try {
@@ -61,7 +80,7 @@ public class PhysicianRestController {
     }
     
     @PostMapping("delete")
-    public ResponseEntity save(@RequestBody String id) {
+    public ResponseEntity delete(@RequestBody String id) {
 
         try {
             physicianSvc.delete(id);

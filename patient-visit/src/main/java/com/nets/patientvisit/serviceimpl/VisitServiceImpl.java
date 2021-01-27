@@ -60,4 +60,11 @@ public class VisitServiceImpl implements VisitService {
         });
     }
 
+    @Override
+    public Visit findById(String id) {
+        return visitRepo.findById(id).get();
+    }
+    
+    
+
 }

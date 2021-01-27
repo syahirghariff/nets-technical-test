@@ -8,7 +8,6 @@ package com.nets.patientvisit.serviceimpl;
 import com.nets.patientvisit.entity.Physician;
 import com.nets.patientvisit.exception.ApplicationException;
 import com.nets.patientvisit.repository.PhysicianRepository;
-import com.nets.patientvisit.service.HolidayService;
 import com.nets.patientvisit.service.PhysicianService;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -61,4 +60,19 @@ public class PhysicianServiceImpl implements PhysicianService {
         });
 
     }
+
+    @Override
+    public Physician findById(String id) {
+        return physicianRepo.findById(id).get();
+    }
+
+    @Override
+    public List<Physician> findPhysician() {
+        return Physician.setPhysicianList(this.findAll());
+    }
+    
+    
+    
+    
+    
 }

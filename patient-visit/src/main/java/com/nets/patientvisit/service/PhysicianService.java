@@ -19,7 +19,11 @@ public interface PhysicianService {
     public Physician save(Physician req);
 
     public Physician update(Physician req);
+    
+    public Physician findById(String id);
 
     public void delete(String id);
+    
+    public List<Physician> findPhysician();
     
 }

@@ -8,7 +8,6 @@ package com.nets.patientvisit.serviceimpl;
 import com.nets.patientvisit.entity.Patient;
 import com.nets.patientvisit.exception.ApplicationException;
 import com.nets.patientvisit.repository.PatientRepository;
-import com.nets.patientvisit.service.HolidayService;
 import com.nets.patientvisit.service.PatientService;
 import java.util.List;
 import java.util.Optional;
@@ -62,5 +61,12 @@ public class PatientServiceImpl implements PatientService {
             throw new ApplicationException("Patient ID cannot be found ", HttpStatus.NOT_FOUND);
         });
     }
+
+    @Override
+    public Patient findById(String id) {
+        return patientRepo.findById(id).get();
+    }
+    
+    
 
 }

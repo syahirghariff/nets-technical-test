@@ -22,6 +22,8 @@ public interface VisitService {
 
     public void delete(String id);
     
+    public Visit findById(String id);
+    
     
     
 }

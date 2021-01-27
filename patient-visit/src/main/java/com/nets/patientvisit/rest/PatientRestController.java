@@ -68,5 +68,16 @@ public class PatientRestController {
         }
 
     }
+    
+    @PostMapping("find-by-id")
+    public ResponseEntity findById(@RequestBody String id) {
+
+        try {
+            return ResponseUtil.success(patientSvc.findById(id));
+        } catch (Exception error) {
+            return ResponseUtil.exception(error);
+        }
+
+    }
 
 }

@@ -27,7 +27,7 @@ public class VisitRestController {
     @Autowired
     private VisitService visitSvc;
 
-    @GetMapping("/find_all")
+    @GetMapping("/find-all")
     public ResponseEntity findAll() {
 
         try {
@@ -58,11 +58,22 @@ public class VisitRestController {
     }
     
     @PostMapping("delete")
-    public ResponseEntity save(@RequestBody String id) {
+    public ResponseEntity delete(@RequestBody String id) {
 
         try {
             visitSvc.delete(id);
             return ResponseUtil.success("Successfully delete");
+        } catch (Exception error) {
+            return ResponseUtil.exception(error);
+        }
+
+    }
+    
+    @PostMapping("find-by-id")
+    public ResponseEntity findById(@RequestBody String id) {
+
+        try {
+            return ResponseUtil.success(visitSvc.findById(id));
         } catch (Exception error) {
             return ResponseUtil.exception(error);
         }
